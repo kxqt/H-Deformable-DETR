@@ -15,6 +15,7 @@
 Backbone modules.
 """
 from collections import OrderedDict
+from functools import partial
 
 import torch
 import torch.nn.functional as F
@@ -27,6 +28,7 @@ from util.misc import NestedTensor, is_main_process
 
 from .position_encoding import build_position_encoding
 from .swin_transformer import SwinTransformer
+from .vit import SimpleFeaturePyramid, ViT, LastLevelMaxPool
 
 
 class FrozenBatchNorm2d(torch.nn.Module):
@@ -146,6 +148,7 @@ class TransformerBackbone(nn.Module):
     ):
         super().__init__()
         out_indices = (1, 2, 3)
+        backbone_name = backbone
         if backbone == "swin_tiny":
             backbone = SwinTransformer(
                 embed_dim=96,
@@ -159,7 +162,6 @@ class TransformerBackbone(nn.Module):
                 out_indices=out_indices,
             )
             embed_dim = 96
-            backbone.init_weights(args.pretrained_backbone_path)
         elif backbone == "swin_small":
             backbone = SwinTransformer(
                 embed_dim=96,
@@ -173,7 +175,6 @@ class TransformerBackbone(nn.Module):
                 out_indices=out_indices,
             )
             embed_dim = 96
-            backbone.init_weights(args.pretrained_backbone_path)
         elif backbone == "swin_large":
             backbone = SwinTransformer(
                 embed_dim=192,
@@ -187,7 +188,6 @@ class TransformerBackbone(nn.Module):
                 out_indices=out_indices,
             )
             embed_dim = 192
-            backbone.init_weights(args.pretrained_backbone_path)
         elif backbone == "swin_large_window12":
             backbone = SwinTransformer(
                 pretrain_img_size=384,
@@ -202,9 +202,37 @@ class TransformerBackbone(nn.Module):
                 out_indices=out_indices,
             )
             embed_dim = 192
-            backbone.init_weights(args.pretrained_backbone_path)
+        elif backbone == "vit_base":
+            backbone = SimpleFeaturePyramid(
+                net=ViT(
+                    img_size=1024,
+                    patch_size=16,
+                    embed_dim=768,
+                    depth=12,
+                    num_heads=12,
+                    drop_path_rate=0.1,
+                    window_size=14,
+                    mlp_ratio=4,
+                    qkv_bias=True,
+                    norm_layer=partial(nn.LayerNorm, eps=1e-6),
+                    window_block_indexes=[0, 1, 3, 4, 6, 7, 9, 10],
+                    residual_block_indexes=[],
+                    use_checkpoint=True,
+                    use_rel_pos=True,
+                    out_feature="last_feat",
+                ),
+                in_feature="last_feat",
+                out_channels=256,
+                # scale_factors=(4.0, 2.0, 1.0, 0.5),
+                scale_factors=(2.0, 1.0, 0.5),
+                # top_block=LastLevelMaxPool(),
+                norm="LN",
+                square_pad=1024,
+            )
+            embed_dim = 256
         else:
             raise NotImplementedError
+        backbone.init_weights(args.pretrained_backbone_path)
 
         for name, parameter in backbone.named_parameters():
             # TODO: freeze some layers?
@@ -212,16 +240,23 @@ class TransformerBackbone(nn.Module):
                 parameter.requires_grad_(False)
 
         if return_interm_layers:
-
-            self.strides = [8, 16, 32]
-            self.num_channels = [
-                embed_dim * 2,
-                embed_dim * 4,
-                embed_dim * 8,
-            ]
+            if 'vit' in backbone_name:
+                self.strides = [16] * 3
+                self.num_channels = [embed_dim] * 3
+            else:
+                self.strides = [8, 16, 32]
+                self.num_channels = [
+                    embed_dim * 2,
+                    embed_dim * 4,
+                    embed_dim * 8,
+                ]
         else:
-            self.strides = [32]
-            self.num_channels = [embed_dim * 8]
+            if 'vit' in backbone_name:
+                self.strides = [16]
+                self.num_channels = [embed_dim]
+            else:
+                self.strides = [32]
+                self.num_channels = [embed_dim * 8]
 
         self.body = backbone
 

@@ -99,7 +99,7 @@ def get_args_parser():
     # swin backbone
     parser.add_argument(
         "--pretrained_backbone_path",
-        default="./swin_tiny_patch4_window7_224.pkl",
+        default=None,
         type=str,
     )
     parser.add_argument("--drop_path_rate", default=0.2, type=float)
