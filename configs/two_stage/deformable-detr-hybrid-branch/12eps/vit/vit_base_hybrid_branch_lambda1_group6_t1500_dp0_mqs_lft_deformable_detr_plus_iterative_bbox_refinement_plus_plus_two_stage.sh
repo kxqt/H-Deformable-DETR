@@ -20,6 +20,6 @@ python -u main.py \
     --mixed_selection \
     --look_forward_twice \
     --backbone vit_base \
+    --pretrained_backbone_path pretrained_backbone/mae_pretrain_vit_base.pth \
+    --use_checkpoint \
     ${PY_ARGS}
-    # --pretrained_backbone_path pretrained_backbone/vit_base_maskrcnn_vitdet.pkl \
-    # ${PY_ARGS}

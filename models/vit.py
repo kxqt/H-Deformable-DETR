@@ -737,7 +737,7 @@ class SimpleFeaturePyramid(nn.Module):
         if isinstance(pretrained, str):
             self.apply(_init_weights)
             logger = get_root_logger()
-            load_checkpoint(self, pretrained, strict=False, logger=logger)
+            load_checkpoint(self.net, pretrained, strict=False, logger=logger)
         elif pretrained is None:
             self.apply(_init_weights)
         else:
