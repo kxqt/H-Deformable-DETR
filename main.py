@@ -30,6 +30,8 @@ from datasets import build_dataset, get_coco_api_from_dataset
 from engine import evaluate, train_one_epoch
 from models import build_model
 
+from models.vit import get_vit_lr_decay_rate
+
 
 def get_args_parser():
     parser = argparse.ArgumentParser("Deformable DETR Detector", add_help=False)
@@ -38,6 +40,7 @@ def get_args_parser():
         "--lr_backbone_names", default=["backbone.0"], type=str, nargs="+"
     )
     parser.add_argument("--lr_backbone", default=2e-5, type=float)
+    parser.add_argument("--lr_backbone_decay_rate", default=1.0, type=float)
     parser.add_argument(
         "--lr_linear_proj_names",
         default=["reference_points", "sampling_offsets"],
@@ -47,6 +50,7 @@ def get_args_parser():
     parser.add_argument("--lr_linear_proj_mult", default=0.1, type=float)
     parser.add_argument("--batch_size", default=2, type=int)
     parser.add_argument("--weight_decay", default=1e-4, type=float)
+    parser.add_argument("--wd_backbone", default=1e-4, type=float)
     parser.add_argument("--epochs", default=50, type=int)
     parser.add_argument("--lr_drop", default=40, type=int)
     parser.add_argument("--lr_drop_epochs", default=None, type=int, nargs="+")
@@ -321,6 +325,28 @@ def main(args):
     for n, p in model_without_ddp.named_parameters():
         print(n)
 
+
+    if 'vit' in args.backbone:
+        layers_backbone = 12 if 'vit_base' in args.backbone else 24
+        backbone_param_dicts = [{
+            "name": n,
+            "params": [p],
+            "weight_decay": args.wd_backbone if 'pos_embed' not in n else 0.,
+            "lr": args.lr_backbone * get_vit_lr_decay_rate(n, args.lr_backbone_decay_rate, layers_backbone),
+        }
+        for n, p in model_without_ddp.named_parameters()
+        if match_name_keywords(n, args.lr_backbone_names) and p.requires_grad
+        ]
+    else:
+        backbone_param_dicts = [{
+            "params": [
+                p
+                for n, p in model_without_ddp.named_parameters()
+                if match_name_keywords(n, args.lr_backbone_names) and p.requires_grad
+            ],
+            "lr": args.lr_backbone,
+        }]
+
     param_dicts = [
         {
             "params": [
@@ -332,14 +358,7 @@ def main(args):
             ],
             "lr": args.lr,
         },
-        {
-            "params": [
-                p
-                for n, p in model_without_ddp.named_parameters()
-                if match_name_keywords(n, args.lr_backbone_names) and p.requires_grad
-            ],
-            "lr": args.lr_backbone,
-        },
+        *backbone_param_dicts,
         {
             "params": [
                 p
