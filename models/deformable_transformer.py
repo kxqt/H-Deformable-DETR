@@ -82,7 +82,11 @@ class DeformableTransformer(nn.Module):
             use_checkpoint,
         )
 
-        self.level_embed = nn.Parameter(torch.Tensor(num_feature_levels, d_model))
+        # avoid unused parameters
+        if num_encoder_layers > 0:
+            self.level_embed = nn.Parameter(torch.Tensor(num_feature_levels, d_model))
+        else:
+            self.level_embed = torch.Tensor(num_feature_levels, d_model)
 
         if two_stage:
             self.enc_output = nn.Linear(d_model, d_model)
@@ -202,7 +206,7 @@ class DeformableTransformer(nn.Module):
             pos_embed = pos_embed.flatten(2).transpose(1, 2)
             zero_pos_embed = torch.zeros_like(pos_embed, requires_grad=False)
             # lvl_pos_embed = pos_embed + self.level_embed[lvl].view(1, 1, -1)
-            lvl_pos_embed = zero_pos_embed + self.level_embed[lvl].view(1, 1, -1)
+            lvl_pos_embed = zero_pos_embed + self.level_embed[lvl].view(1, 1, -1).to(device=zero_pos_embed.device)
             lvl_pos_embed_flatten.append(lvl_pos_embed)
             src_flatten.append(src)
             mask_flatten.append(mask)

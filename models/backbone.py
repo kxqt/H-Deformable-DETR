@@ -158,7 +158,7 @@ class TransformerBackbone(nn.Module):
                 ape=False,
                 drop_path_rate=args.drop_path_rate,
                 patch_norm=True,
-                use_checkpoint=True,
+                use_checkpoint=args.use_checkpoint,
                 out_indices=out_indices,
             )
             embed_dim = 96
@@ -171,7 +171,7 @@ class TransformerBackbone(nn.Module):
                 ape=False,
                 drop_path_rate=args.drop_path_rate,
                 patch_norm=True,
-                use_checkpoint=True,
+                use_checkpoint=args.use_checkpoint,
                 out_indices=out_indices,
             )
             embed_dim = 96
@@ -184,7 +184,7 @@ class TransformerBackbone(nn.Module):
                 ape=False,
                 drop_path_rate=args.drop_path_rate,
                 patch_norm=True,
-                use_checkpoint=True,
+                use_checkpoint=args.use_checkpoint,
                 out_indices=out_indices,
             )
             embed_dim = 192
@@ -198,7 +198,7 @@ class TransformerBackbone(nn.Module):
                 ape=False,
                 drop_path_rate=args.drop_path_rate,
                 patch_norm=True,
-                use_checkpoint=True,
+                use_checkpoint=args.use_checkpoint,
                 out_indices=out_indices,
             )
             embed_dim = 192
@@ -217,7 +217,35 @@ class TransformerBackbone(nn.Module):
                     norm_layer=partial(nn.LayerNorm, eps=1e-6),
                     window_block_indexes=[0, 1, 3, 4, 6, 7, 9, 10],
                     residual_block_indexes=[],
-                    use_checkpoint=True,
+                    use_checkpoint=args.use_checkpoint,
+                    use_rel_pos=True,
+                    out_feature="last_feat",
+                ),
+                in_feature="last_feat",
+                out_channels=256,
+                # scale_factors=(4.0, 2.0, 1.0, 0.5),
+                scale_factors=(2.0, 1.0, 0.5),
+                # top_block=LastLevelMaxPool(),
+                norm="LN",
+                square_pad=1024,
+            )
+            embed_dim = 256
+        elif backbone == "vit_large":
+            backbone = SimpleFeaturePyramid(
+                net=ViT(
+                    img_size=1024,
+                    patch_size=16,
+                    embed_dim=768,
+                    depth=12,
+                    num_heads=12,
+                    drop_path_rate=0.1,
+                    window_size=14,
+                    mlp_ratio=4,
+                    qkv_bias=True,
+                    norm_layer=partial(nn.LayerNorm, eps=1e-6),
+                    window_block_indexes=[0, 1, 3, 4, 6, 7, 9, 10],
+                    residual_block_indexes=[],
+                    use_checkpoint=args.use_checkpoint,
                     use_rel_pos=True,
                     out_feature="last_feat",
                 ),
