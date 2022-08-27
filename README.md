@@ -195,6 +195,61 @@ We provide a set of baseline results and trained models available for download:
 </tr>
 </tbody></table>
 
+
+### Models with the ViT-Det backbone
+<table><tbody>
+<!-- START TABLE -->
+<!-- TABLE HEADER -->
+<th valign="bottom">Name</th>
+<th valign="bottom">Backbone</th>
+<th valign="bottom">query</th>
+<th valign="bottom">encoder</th>
+<th valign="bottom">epochs</th>
+<th valign="bottom">AP</th>
+<th valign="bottom">download</th>
+<!-- TABLE BODY -->
+ <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/12eps/vit/vit_base_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
+<td align="center">ViT-B</td>
+<td align="center">300</td>
+<td align="center">6</td>
+<td align="center">12</td>
+<td align="center">50.6</td>
+<td align="center">model</td>
+</tr>
+ <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/12eps/vit/vit_base_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
+<td align="center">ViT-B</td>
+<td align="center">300</td>
+<td align="center">2</td>
+<td align="center">12</td>
+<td align="center">49.8</td>
+<td align="center">model</td>
+</tr>
+ <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/12eps/vit/vit_base_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
+<td align="center">ViT-B</td>
+<td align="center">300</td>
+<td align="center">0</td>
+<td align="center">12</td>
+<td align="center">47.1</td>
+<td align="center">model</td>
+</tr>
+ <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/36eps/vit/vit_large_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
+<td align="center">ViT-L</td>
+<td align="center">300</td>
+<td align="center">6</td>
+<td align="center">12</td>
+<td align="center">DEBUGGING</td>
+<td align="center">model</td>
+</tr>
+ <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/36eps/vit/vit_large_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
+<td align="center">ViT-L</td>
+<td align="center">300</td>
+<td align="center">6</td>
+<td align="center">36</td>
+<td align="center">DEBUGGING</td>
+<td align="center">model</td>
+</tr>
+</tbody></table>
+
 ## Installation
 We test our models under ```python=3.7.10,pytorch=1.10.1,cuda=10.2```. Other versions might be available as well.
 

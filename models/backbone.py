@@ -231,19 +231,23 @@ class TransformerBackbone(nn.Module):
             )
             embed_dim = 256
         elif backbone == "vit_large":
+            window_block_indexes = []
+            for i in range(24):
+                if i % 6 != 5:
+                    window_block_indexes.append(i)
             backbone = SimpleFeaturePyramid(
                 net=ViT(
                     img_size=1024,
                     patch_size=16,
-                    embed_dim=768,
-                    depth=12,
-                    num_heads=12,
-                    drop_path_rate=0.1,
+                    embed_dim=1024,
+                    depth=24,
+                    num_heads=16,
+                    drop_path_rate=0.4,
                     window_size=14,
                     mlp_ratio=4,
                     qkv_bias=True,
                     norm_layer=partial(nn.LayerNorm, eps=1e-6),
-                    window_block_indexes=[0, 1, 3, 4, 6, 7, 9, 10],
+                    window_block_indexes=window_block_indexes,
                     residual_block_indexes=[],
                     use_checkpoint=args.use_checkpoint,
                     use_rel_pos=True,
