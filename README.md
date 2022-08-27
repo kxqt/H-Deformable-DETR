@@ -216,7 +216,7 @@ We provide a set of baseline results and trained models available for download:
 <td align="center">50.6</td>
 <td align="center">model</td>
 </tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/12eps/vit/vit_base_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
+ <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/12eps/vit/vit_base_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_enc2.sh">H-Deformable-DETR + tricks</a></td>
 <td align="center">ViT-B</td>
 <td align="center">300</td>
 <td align="center">2</td>
@@ -224,7 +224,7 @@ We provide a set of baseline results and trained models available for download:
 <td align="center">49.8</td>
 <td align="center">model</td>
 </tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/12eps/vit/vit_base_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
+ <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/12eps/vit/vit_base_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_enc0.sh">H-Deformable-DETR + tricks</a></td>
 <td align="center">ViT-B</td>
 <td align="center">300</td>
 <td align="center">0</td>
@@ -232,7 +232,7 @@ We provide a set of baseline results and trained models available for download:
 <td align="center">47.1</td>
 <td align="center">model</td>
 </tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/36eps/vit/vit_large_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
+ <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/12eps/vit/vit_large_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
 <td align="center">ViT-L</td>
 <td align="center">300</td>
 <td align="center">6</td>
