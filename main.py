@@ -22,7 +22,9 @@ import os
 
 import numpy as np
 import torch
+import torch.distributed as dist
 from torch.utils.data import DataLoader
+import wandb
 import datasets
 import util.misc as utils
 import datasets.samplers as samplers
@@ -244,6 +246,10 @@ def get_args_parser():
 
     # * logging technologies
     parser.add_argument("--use_wandb", action="store_true", default=False)
+    parser.add_argument("--wandb_name", type=str, default=None)
+    parser.add_argument("--wandb_key", type=str, default=None)
+    parser.add_argument("--wandb_entity", type=str, default=None)
+    parser.add_argument("--wandb_project", type=str, default=None)
     return parser
 
 
@@ -392,6 +398,18 @@ def main(args):
     if args.frozen_weights is not None:
         checkpoint = torch.load(args.frozen_weights, map_location="cpu")
         model_without_ddp.detr.load_state_dict(checkpoint["model"])
+
+    if args.use_wandb and dist.get_rank() == 0:
+        wandb.login(key=args.wandb_key)
+        wandb.init(
+            entity=args.wandb_entity,
+            project=args.wandb_project,
+            id=args.wandb_name,  # set id as wandb_name for resume
+            name=args.wandb_name,
+            # job_type = 'train_model',
+            # resume=True
+            #config = str(cfg),
+        )
 
     output_dir = Path(args.output_dir)
     if args.resume and os.path.exists(args.resume):
