@@ -196,7 +196,7 @@ We provide a set of baseline results and trained models available for download:
 </tbody></table>
 
 
-### Models with the ViT-Det backbone
+### Models with ViT (MAE) backbone
 <table><tbody>
 <!-- START TABLE -->
 <!-- TABLE HEADER -->
