@@ -155,7 +155,7 @@ def pad(image, target, padding):
         return padded_image, None
     target = target.copy()
     # should we do something wrt the original size?
-    target["size"] = torch.tensor(padded_image[::-1])
+    target["size"] = torch.tensor(padded_image.size)
     if "masks" in target:
         target["masks"] = torch.nn.functional.pad(
             target["masks"], (0, padding[0], 0, padding[1])
@@ -168,6 +168,9 @@ class RandomCrop(object):
         self.size = size
 
     def __call__(self, img, target):
+        h, w = img.height, img.width
+        if h < self.size[0] or w < self.size[1]:
+            return img, target
         region = T.RandomCrop.get_params(img, self.size)
         return crop(img, target, region)
 
@@ -217,6 +220,17 @@ class RandomResize(object):
         return resize(img, target, size, self.max_size)
 
 
+class ResizeScale(object):
+    def __init__(self, min_scale=0.1, max_scale=1.0):
+        self.min_scale = min_scale
+        self.max_scale = max_scale
+
+    def __call__(self, img, target=None):
+        scale = random.random() * (self.max_scale - self.min_scale) + self.min_scale
+        size = (int(img.size[0] * scale), int(img.size[1] * scale))
+        return resize(img, target, size)
+
+
 class RandomPad(object):
     def __init__(self, max_pad):
         self.max_pad = max_pad
@@ -225,6 +239,17 @@ class RandomPad(object):
         pad_x = random.randint(0, self.max_pad)
         pad_y = random.randint(0, self.max_pad)
         return pad(img, target, (pad_x, pad_y))
+
+
+class Pad(object):
+    def __init__(self, size):
+        self.size = size
+
+    def __call__(self, img, target):
+        h, w = img.height, img.width
+        if h > self.size[0] or w > self.size[1]:
+            return img, target
+        return pad(img, target, self.size)
 
 
 class RandomSelect(object):

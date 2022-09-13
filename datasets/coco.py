@@ -174,10 +174,36 @@ def make_coco_transforms(image_set):
     raise ValueError(f"unknown {image_set}")
 
 
+def make_coco_transforms_lsj(image_set):
+
+    normalize = T.Compose(
+        [T.ToTensor(), T.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]
+    )
+
+    image_size = (1024, 1024)
+
+    if image_set == "train":
+        return T.Compose(
+            [
+                T.RandomHorizontalFlip(),
+                T.ResizeScale(min_scale=0.1, max_scale=2.0),
+                T.RandomCrop(image_size),
+                T.Pad(image_size),
+                normalize,
+            ]
+        )
+
+    if image_set == "val":
+        return T.Compose([T.RandomResize([800], max_size=1333), normalize,])
+
+    raise ValueError(f"unknown {image_set}")
+
+
 def build(image_set, args, eval_in_training_set):
     root = Path(args.coco_path)
     assert root.exists(), f"provided COCO path {root} does not exist"
     mode = "instances"
+    transforms = make_coco_transforms_lsj(image_set) if args.lsj else make_coco_transforms(image_set)
     PATHS = {
         "train": (root / "train2017", root / "annotations" / f"{mode}_train2017.json"),
         "val": (root / "val2017", root / "annotations" / f"{mode}_val2017.json"),
@@ -190,7 +216,7 @@ def build(image_set, args, eval_in_training_set):
     dataset = CocoDetection(
         img_folder,
         ann_file,
-        transforms=make_coco_transforms(image_set),
+        transforms=transforms,
         return_masks=args.masks,
         cache_mode=args.cache_mode,
         local_rank=get_local_rank(),

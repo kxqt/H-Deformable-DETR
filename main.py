@@ -233,6 +233,9 @@ def get_args_parser():
         help="whether to cache images on memory",
     )
 
+    # augmentation
+    parser.add_argument("--lsj", default=False, action="store_true", help="use large-scale jittering")
+
     # * eval technologies
     parser.add_argument("--eval", action="store_true")
     # eval in training set
