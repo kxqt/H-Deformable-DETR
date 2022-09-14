@@ -4,196 +4,14 @@ This is the official implementation of the paper "[DETRs with Hybrid Matching](h
 
 Authors: Ding Jia, Yuhui Yuan, Haodi He, Xiaopei Wu, Haojun Yu, Weihong Lin, Lei Sun, Chao Zhang, Han Hu
 
+## News
+
+**2022.09.14** We support [H-Deformable-DETR w/ ViT-L (MAE)]() achieves **56.5** AP on COCO val with **4-scale feature maps** without using LSJ (large scale jittering) adoted by the original [ViT-Det](https://github.com/facebookresearch/detectron2/blob/main/projects/ViTDet/configs/common/coco_loader_lsj.py).
+
 
 ## Model ZOO
 
 We provide a set of baseline results and trained models available for download:
-
-### Models with the ResNet-50 backbone
-<table><tbody>
-<!-- START TABLE -->
-<!-- TABLE HEADER -->
-<th valign="bottom">Name</th>
-<th valign="bottom">Backbone</th>
-<th valign="bottom">query</th>
-<th valign="bottom">epochs</th>
-<th valign="bottom">AP</th>
-<th valign="bottom">download</th>
-<!-- TABLE BODY -->
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-baseline/12eps/r50_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">Deformable-DETR</a></td>
-<td align="center">R50</td>
-<td align="center">300</td>
-<td align="center">12</td>
-<td align="center">43.7</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/r50_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_12eps.pth">model</a></td>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-baseline/36eps/r50_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">Deformable-DETR</a></td>
-<td align="center">R50</td>
-<td align="center">300</td>
-<td align="center">36</td>
-<td align="center">46.8</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/r50_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_36eps.pth">model</a></td>
-</tr>
-</tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-baseline/12eps/r50_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">Deformable-DETR + tricks</a></td>
-<td align="center">R50</td>
-<td align="center">300</td>
-<td align="center">12</td>
-<td align="center">47.0</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/r50_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_12eps.pth">model</a></td>
-</tr>
-</tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-baseline/36eps/r50_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">Deformable-DETR + tricks</a></td>
-<td align="center">R50</td>
-<td align="center">300</td>
-<td align="center">36</td>
-<td align="center">49.0</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/r50_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_36eps.pth">model</a></td>
-</tr>
-</tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/12eps/r50_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
-<td align="center">R50</td>
-<td align="center">300</td>
-<td align="center">12</td>
-<td align="center">48.7</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/r50_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_12eps.pth">model</a></td>
-</tr>
-</tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/36eps/r50_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
-<td align="center">R50</td>
-<td align="center">300</td>
-<td align="center">36</td>
-<td align="center">50.0</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/r50_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_36eps.pth">model</a></td>
-</tr>
-</tbody></table>
-
-### Models with Swin Transformer backbones
-
-<table><tbody>
-<!-- START TABLE -->
-<!-- TABLE HEADER -->
-<th valign="bottom">Name</th>
-<th valign="bottom">Backbone</th>
-<th valign="bottom">query</th>
-<th valign="bottom">epochs</th>
-<th valign="bottom">AP</th>
-<th valign="bottom">download</th>
-<!-- TABLE BODY -->
-<tr><td align="left"><a href="configs/two_stage/deformable-detr-baseline/12eps/swin/swin_tiny_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">Deformable-DETR</a></td>
-<td align="center">Swin Tiny</td>
-<td align="center">300</td>
-<td align="center">12</td>
-<td align="center">45.3, 46.0</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/swin_tiny_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_12eps.pth">model</a>, <a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/swin_tiny_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_12eps_2.pth">model</a></td>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-baseline/36eps/swin/swin_tiny_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">Deformable-DETR</a></td>
-<td align="center">Swin Tiny</td>
-<td align="center">300</td>
-<td align="center">36</td>
-<td align="center">49.0,49.6</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/swin_tiny_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_36eps.pth">model</a>, <a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/swin_tiny_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_36eps_2.pth">model</a></td>
-</tr>
-</tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-baseline/12eps/swin/swin_tiny_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">Deformable-DETR + tricks</a></td>
-<td align="center">Swin Tiny</td>
-<td align="center">300</td>
-<td align="center">12</td>
-<td align="center">49.3</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/swin_tiny_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_12eps.pth">model</a></td>
-</tr>
-</tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-baseline/36eps/swin/swin_tiny_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">Deformable-DETR + tricks</a></td>
-<td align="center">Swin Tiny</td>
-<td align="center">300</td>
-<td align="center">36</td>
-<td align="center">51.8</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/swin_tiny_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_36eps.pth">model</a></td>
-</tr>
-</tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/12eps/swin/swin_tiny_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
-<td align="center">Swin Tiny</td>
-<td align="center">300</td>
-<td align="center">12</td>
-<td align="center">50.6</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/swin_tiny_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_12eps.pth">model</a></td>
-</tr>
-</tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/36eps/swin/swin_tiny_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
-<td align="center">Swin Tiny</td>
-<td align="center">300</td>
-<td align="center">36</td>
-<td align="center">53.2</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/swin_tiny_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_36eps.pth">model</a></td>
-</tr>
-<tr><td align="left"><a href="configs/two_stage/deformable-detr-baseline/12eps/swin/swin_large_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">Deformable-DETR</a></td>
-<td align="center">Swin Large</td>
-<td align="center">300</td>
-<td align="center">12</td>
-<td align="center">51.0</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/swin_large_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_12eps.pth">model</a></td>
-
-<tr><td align="left"><a href="configs/two_stage/deformable-detr-baseline/36eps/swin/drop_path0.5_swin_large_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">Deformable-DETR</a></td>
-<td align="center">Swin Large</td>
-<td align="center">300</td>
-<td align="center">36</td>
-<td align="center">53.7</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/drop_path0.5_swin_large_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_36eps.pth">model</a></td>
-</tr>
-</tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-baseline/12eps/swin/swin_large_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">Deformable-DETR + tricks</a></td>
-<td align="center">Swin Large</td>
-<td align="center">300</td>
-<td align="center">12</td>
-<td align="center">54.5</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/swin_large_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_12eps.pth">model</a></td>
-</tr>
-</tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-baseline/36eps/swin/drop_path0.5_swin_large_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">Deformable-DETR + tricks</a></td>
-<td align="center">Swin Large</td>
-<td align="center">300</td>
-<td align="center">36</td>
-<td align="center">56.3</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/drop_path0.5_swin_large_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_36eps.pth">model</a></td>
-</tr>
-</tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/12eps/swin/swin_large_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
-<td align="center">Swin Large</td>
-<td align="center">300</td>
-<td align="center">12</td>
-<td align="center">55.9</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/swin_large_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_12eps.pth">model</a></td>
-</tr>
-</tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/36eps/swin/drop_path0.5_swin_large_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
-<td align="center">Swin Large</td>
-<td align="center">300</td>
-<td align="center">36</td>
-<td align="center">57.1</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/drop_path0.5_swin_large_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_36eps.pth">model</a></td>
-</tr>
-</tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/12eps/swin/swin_large_hybrid_branch_lambda1_group6_t1500_n900_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
-<td align="center">Swin Large</td>
-<td align="center">900</td>
-<td align="center">12</td>
-<td align="center">56.1</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/swin_large_hybrid_branch_lambda1_group6_t1500_n900_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_12eps.pth">model</a></td>
-</tr>
-</tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/36eps/swin/drop_path0.5_swin_large_hybrid_branch_lambda1_group6_t1500_n900_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
-<td align="center">Swin Large</td>
-<td align="center">900</td>
-<td align="center">36</td>
-<td align="center">57.4</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/drop_path0.5_swin_large_hybrid_branch_lambda1_group6_t1500_n900_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_36eps.pth">model</a></td>
-</tr>
- <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/36eps/swin/drop_path0.5_swin_large_hybrid_branch_lambda1_group6_t1500_n900_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks [topk=300]</a></td>
-<td align="center">Swin Large</td>
-<td align="center">900</td>
-<td align="center">36</td>
-<td align="center">57.6</td>
-<td align="center"><a href="https://github.com/HDETR/H-Deformable-DETR/releases/download/v0.1/drop_path0.5_swin_large_hybrid_branch_lambda1_group6_t1500_n900_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage_36eps.pth">model</a></td>
-</tr>
-</tbody></table>
 
 
 ### Models with ViT (MAE) backbone
@@ -273,6 +91,7 @@ We provide a set of baseline results and trained models available for download:
 <td align="center">model</td>
 </tr>
 </tbody></table>
+
 
 ## Installation
 We test our models under ```python=3.7.10,pytorch=1.10.1,cuda=10.2```. Other versions might be available as well.
