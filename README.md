@@ -6,7 +6,7 @@ Authors: Ding Jia, Yuhui Yuan, Haodi He, Xiaopei Wu, Haojun Yu, Weihong Lin, Lei
 
 ## News
 
-**2022.09.14** We support [H-Deformable-DETR w/ ViT-L (MAE)]() achieves **56.5** AP on COCO val with **4-scale feature maps** without using LSJ (large scale jittering) adopted by the original [ViT-Det](https://github.com/facebookresearch/detectron2/blob/main/projects/ViTDet/configs/common/coco_loader_lsj.py).
+**2022.09.14** We support [H-Deformable-DETR w/ ViT-L (MAE)](https://github.com/kxqt/H-Deformable-DETR#model-zoo) achieves **56.5** AP on COCO val with **4-scale feature maps** without using LSJ (large scale jittering) adopted by the original [ViT-Det](https://github.com/facebookresearch/detectron2/blob/main/projects/ViTDet/configs/common/coco_loader_lsj.py).
 
 
 ## Model ZOO
