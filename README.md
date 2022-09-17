@@ -69,7 +69,7 @@ We provide a set of baseline results and trained models available for download:
 <td align="center">:x:</td>
 <td align="center">6</td>
 <td align="center">36</td>
-<td align="center">55.4</td>
+<td align="center">55.5</td>
 <td align="center">model</td>
 </tr>
  <tr><td align="left"><a href="configs/two_stage/deformable-detr-hybrid-branch/36eps/vit/vit_large_hybrid_branch_lambda1_group6_t1500_dp0_mqs_lft_deformable_detr_plus_iterative_bbox_refinement_plus_plus_two_stage.sh">H-Deformable-DETR + tricks</a></td>
@@ -87,7 +87,7 @@ We provide a set of baseline results and trained models available for download:
 <td align="center">:x:</td>
 <td align="center">6</td>
 <td align="center">100</td>
-<td align="center">RUNNING</td>
+<td align="center">56.6</td>
 <td align="center">model</td>
 </tr>
 </tbody></table>
